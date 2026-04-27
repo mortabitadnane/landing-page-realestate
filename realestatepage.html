@@ -1,30 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Axiome Immobilier | Rent & Buy Apartments Kénitra</title>
+  <title>Axiome Immobilier | Location & Vente Kénitra</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    html {
-      scroll-behavior: smooth;
-    }
-    .service-card {
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .service-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.15);
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .alert-show {
-      animation: fadeIn 0.3s ease-out;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans antialiased">
 
@@ -137,7 +119,7 @@
     </div>
   </section>
 
-  <!-- CONTACT SECTION - FULLY WORKING WITH YOUR WEB3FORMS ACCESS KEY -->
+  <!-- Contact Section -->
   <section id="contact" class="py-18 px-6 max-w-5xl mx-auto mb-16">
     <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
       <div class="bg-gradient-to-r from-blue-800 to-indigo-800 px-6 py-5 text-white">
@@ -165,53 +147,39 @@
             </div>
           </div>
           
-          <!-- Right column: WORKING FORM with YOUR Web3Forms access key -->
+          <!-- Right column: form -->
           <div>
             <h3 class="text-xl font-bold mb-4 text-gray-800"><i class="fas fa-paper-plane text-blue-500 mr-2"></i>Envoyez votre demande</h3>
             <p class="text-sm text-gray-600 mb-4">Remplissez le formulaire ci-dessous. Nous vous répondrons rapidement.</p>
             
-            <!-- YOUR WORKING WEB3FORMS FORM WITH THE ACCESS KEY -->
             <form action="https://api.web3forms.com/submit" method="POST" class="space-y-4" id="contactForm">
-              <!-- Your Access Key -->
               <input type="hidden" name="access_key" value="f2817678-f661-489f-9acc-5bb4d374722f">
-              
-              <!-- Additional configuration -->
               <input type="hidden" name="subject" value="🏠 Nouvelle demande Axiome Immobilier">
               <input type="hidden" name="from_name" value="Axiome Immobilier Website">
               <input type="hidden" name="redirect" value="https://axiome-immobilier.ma/success">
-              
-              <!-- Spam protection honeypot -->
               <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
               
               <div>
                 <label class="block text-gray-700 font-medium mb-1">Nom complet *</label>
                 <input type="text" name="name" required class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:outline-none transition" placeholder="Youssef Benjelloun">
               </div>
-              
               <div>
                 <label class="block text-gray-700 font-medium mb-1">Email *</label>
                 <input type="email" name="email" required class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:outline-none transition" placeholder="exemple@domaine.com">
               </div>
-              
               <div>
                 <label class="block text-gray-700 font-medium mb-1">Téléphone</label>
                 <input type="tel" name="phone" class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:outline-none transition" placeholder="06 xx xx xx xx">
               </div>
-              
               <div>
                 <label class="block text-gray-700 font-medium mb-1">Votre message *</label>
                 <textarea name="message" rows="4" required class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:outline-none transition" placeholder="Je cherche un appartement de 2 pièces à la Ville Haute, budget location 600€/mois..."></textarea>
               </div>
-              
               <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold text-lg transition-all flex items-center justify-center gap-2 shadow-md">
                 <i class="fas fa-envelope"></i> Envoyer la demande
               </button>
-              <p class="text-xs text-gray-400 text-center mt-2">
-                ✅ Formulaire 100% fonctionnel - Vos messages arrivent directement dans notre boîte email
-              </p>
+              <p class="text-xs text-gray-400 text-center mt-2">✅ Formulaire 100% fonctionnel - Vos messages arrivent directement dans notre boîte email</p>
             </form>
-            
-            <!-- Status message div for feedback -->
             <div id="formStatus" class="mt-4 hidden"></div>
           </div>
         </div>
@@ -248,49 +216,6 @@
     </div>
   </footer>
 
-  <!-- JavaScript for form submission feedback -->
-  <script>
-    const form = document.getElementById('contactForm');
-    const statusDiv = document.getElementById('formStatus');
-    
-    if (form) {
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        // Show loading message
-        statusDiv.className = 'mt-4 p-3 rounded-lg bg-blue-100 text-blue-700 text-sm alert-show';
-        statusDiv.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Envoi en cours...';
-        statusDiv.classList.remove('hidden');
-        
-        // Get form data
-        const formData = new FormData(form);
-        
-        try {
-          const response = await fetch('https://api.web3forms.com/submit', {
-            method: 'POST',
-            body: formData
-          });
-          
-          const data = await response.json();
-          
-          if (data.success) {
-            statusDiv.className = 'mt-4 p-3 rounded-lg bg-green-100 text-green-700 text-sm alert-show';
-            statusDiv.innerHTML = '<i class="fas fa-check-circle mr-2"></i> ✅ Message envoyé avec succès ! Nous vous répondrons sous 24h. Merci !';
-            form.reset();
-          } else {
-            throw new Error('Submission failed');
-          }
-        } catch (error) {
-          statusDiv.className = 'mt-4 p-3 rounded-lg bg-red-100 text-red-700 text-sm alert-show';
-          statusDiv.innerHTML = '<i class="fas fa-exclamation-circle mr-2"></i> ❌ Erreur technique. Veuillez nous contacter directement par téléphone ou WhatsApp.';
-        }
-        
-        // Hide message after 5 seconds
-        setTimeout(() => {
-          statusDiv.classList.add('hidden');
-        }, 5000);
-      });
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
