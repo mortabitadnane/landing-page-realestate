@@ -253,28 +253,25 @@
 <body class="bg-ink-900 text-gray-100 antialiased">
 
   <!-- Navbar -->
-  <header id="nav" class="fixed top-0 inset-x-0 z-40 transition-all duration-300">
-    <div class="max-w-7xl mx-auto px-5 md:px-8 py-4 flex items-center justify-between">
-      <a href="#" class="flex items-center gap-3 group">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-gold-400 to-gold-600 grid place-items-center shadow-glow">
-          <i class="fa-solid fa-house-chimney text-ink-900 text-lg"></i>
-        </div>
-        <div class="leading-tight">
-          <p class="font-display text-lg font-bold text-white">Axiome <span class="text-gold-400">Immobilier</span></p>
-          <p class="text-[10px] tracking-[0.25em] text-gray-400 uppercase">Kénitra · Maroc</p>
-        </div>
-      </a>
-      <nav class="hidden md:flex items-center gap-8 text-sm text-gray-300">
-        <a href="#services" class="link-underline hover:text-white">Services</a>
-        <a href="#proprietes" class="link-underline hover:text-white">Propriétés</a>
-        <a href="#pourquoi" class="link-underline hover:text-white">Pourquoi nous</a>
-        <a href="#contact" class="link-underline hover:text-white">Contact</a>
-      </nav>
-      <a href="tel:+212619842271" class="hidden sm:inline-flex items-center gap-2 btn-gold px-4 py-2 rounded-full font-semibold text-sm">
-        <i class="fa-solid fa-phone-volume"></i> +212 6 19 84 22 71
-      </a>
+ <header style="position: fixed; top: 0; left: 0; right: 0; z-index: 999; background: rgba(10,16,36,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 0.75rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+  <div style="display: flex; align-items: center; gap: 0.75rem;">
+    <div style="width: 2.5rem; height: 2.5rem; background: linear-gradient(135deg, #fbbf24, #f59e0b); border-radius: 0.75rem; display: grid; place-items: center;">
+      <i class="fa-solid fa-house-chimney" style="color: #0a1024; font-size: 1.2rem;"></i>
     </div>
-  </header>
+    <div>
+      <p style="font-family: 'Playfair Display', serif; font-weight: bold; font-size: 1.2rem; color: white;">Axiome <span style="color: #f59e0b;">Immobilier</span></p>
+      <p style="font-size: 0.6rem; letter-spacing: 0.2em; color: #9ca3af; text-transform: uppercase;">Kénitra · Maroc</p>
+    </div>
+  </div>
+  <nav style="display: flex; gap: 1.5rem; font-size: 0.9rem;">
+    <a href="#services" style="color: #e5e7eb; text-decoration: none; transition: color 0.2s;">Services</a>
+    <a href="#proprietes" style="color: #e5e7eb; text-decoration: none;">Propriétés</a>
+    <a href="#contact" style="color: #e5e7eb; text-decoration: none;">Contact</a>
+  </nav>
+  <a href="tel:+212619842271" style="background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #0a1024; padding: 0.5rem 1.2rem; border-radius: 2rem; font-weight: bold; font-size: 0.8rem;">
+    <i class="fa-solid fa-phone-volume"></i> +212 6 19 84 22 71
+  </a>
+</header>
 
   <!-- Hero -->
   <section class="relative min-h-screen flex items-center pt-28 pb-20 px-5 md:px-8 overflow-hidden">
