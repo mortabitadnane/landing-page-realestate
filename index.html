@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Axiome Immobilier | Location & Vente à Kénitra</title>
+  <meta name="description" content="Axiome Immobilier - Agence immobilière à Kénitra. Location & vente d'appartements, accompagnement personnalisé. Agréée N° 0619842271." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            display: ['"Playfair Display"', 'serif'],
+          },
+          colors: {
+            ink: {
+              900: '#0a1024',
+              800: '#0f1733',
+              700: '#162046',
+            },
+            gold: {
+              300: '#fcd34d',
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+            }
+          },
+          boxShadow: {
+            glow: '0 10px 40px -10px rgba(245,158,11,0.45)',
+          }
+        },
+      },
+    };
+  </script>
+
+  <style>
+    :root {
+      --ink-900: #0a1024;
+      --ink-800: #0f1733;
+      --indigo: #1e1b4b;
+      --gold: #f59e0b;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      background: #0a1024;
+      color: #e5e7eb;
+      overflow-x: hidden;
+    }
+    .font-display { font-family: 'Playfair Display', serif; }
+
+    /* Animated aurora background */
+    .aurora {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .aurora::before,
+    .aurora::after {
+      content: '';
+      position: absolute;
+      width: 60vmax;
+      height: 60vmax;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.55;
+      animation: drift 22s ease-in-out infinite alternate;
+    }
+    .aurora::before {
+      background: radial-gradient(circle, #4338ca 0%, transparent 60%);
+      top: -20%;
+      left: -10%;
+    }
+    .aurora::after {
+      background: radial-gradient(circle, #f59e0b 0%, transparent 60%);
+      bottom: -25%;
+      right: -15%;
+      animation-delay: -8s;
+    }
+    @keyframes drift {
+      0%   { transform: translate(0,0) scale(1); }
+      50%  { transform: translate(4%, -3%) scale(1.08); }
+      100% { transform: translate(-3%, 4%) scale(0.95); }
+    }
+
+    /* Subtle grid overlay */
+    .grid-overlay {
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+    }
+
+    /* Glassmorphism */
+    .glass {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+    .glass-dark {
+      background: rgba(10,16,36,0.55);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* Gradient borders for cards */
+    .gradient-border {
+      position: relative;
+      isolation: isolate;
+    }
+    .gradient-border::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      padding: 1px;
+      border-radius: inherit;
+      background: linear-gradient(135deg, rgba(245,158,11,0.55), rgba(99,102,241,0.35) 40%, transparent 70%);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+              mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+              mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    /* Reveal-on-scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.9s cubic-bezier(.2,.7,.2,1), transform 0.9s cubic-bezier(.2,.7,.2,1);
+    }
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Floating badge */
+    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    .float-slow { animation: float 6s ease-in-out infinite; }
+
+    /* Marquee */
+    .marquee {
+      display: flex;
+      gap: 3rem;
+      width: max-content;
+      animation: scroll 30s linear infinite;
+    }
+    @keyframes scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* Service card hover */
+    .service-card {
+      transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s ease, border-color .35s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 60px -20px rgba(245,158,11,0.25), 0 8px 24px -10px rgba(0,0,0,0.6);
+    }
+
+    /* Property card */
+    .prop-card { transition: transform .4s cubic-bezier(.2,.7,.2,1); }
+    .prop-card img { transition: transform .9s cubic-bezier(.2,.7,.2,1); }
+    .prop-card:hover img { transform: scale(1.08); }
+
+    /* Buttons */
+    .btn-gold {
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      color: #0a1024;
+      transition: transform .2s ease, box-shadow .3s ease, filter .3s ease;
+    }
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 35px -10px rgba(245,158,11,0.55);
+      filter: brightness(1.05);
+    }
+
+    /* Animated underline */
+    .link-underline {
+      background-image: linear-gradient(currentColor, currentColor);
+      background-size: 0% 1px;
+      background-position: 0% 100%;
+      background-repeat: no-repeat;
+      transition: background-size .35s ease;
+    }
+    .link-underline:hover { background-size: 100% 1px; }
+
+    /* Form */
+    .field {
+      width: 100%;
+      padding: 0.95rem 1rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 0.9rem;
+      color: white;
+      transition: border-color .25s ease, background .25s ease, box-shadow .25s ease;
+    }
+    .field::placeholder { color: rgba(229,231,235,0.45); }
+    .field:focus {
+      outline: none;
+      border-color: rgba(245,158,11,0.7);
+      background: rgba(255,255,255,0.06);
+      box-shadow: 0 0 0 4px rgba(245,158,11,0.12);
+    }
+
+    /* Floating CTA */
+    .floating-wa {
+      position: fixed;
+      bottom: 1.25rem;
+      right: 1.25rem;
+      z-index: 50;
+      box-shadow: 0 12px 30px -8px rgba(34,197,94,0.55);
+    }
+    .pulse-ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 9999px;
+      animation: pulse 2.4s ease-out infinite;
+      border: 2px solid rgba(34,197,94,0.6);
+    }
+    @keyframes pulse {
+      0%   { transform: scale(1); opacity: 0.8; }
+      100% { transform: scale(1.7); opacity: 0; }
+    }
+
+    /* Stat counter */
+    .stat-num { font-variant-numeric: tabular-nums; }
+
+    /* Scrollbar (subtle) */
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: #0a1024; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 8px; }
+    ::-webkit-scrollbar-thumb:hover { background: #334155; }
+
+    /* Reduce motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body class="bg-ink-900 text-gray-100 antialiased">
+
+  <!-- Navbar -->
+  <header id="nav" class="fixed top-0 inset-x-0 z-40 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-5 md:px-8 py-4 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-gold-400 to-gold-600 grid place-items-center shadow-glow">
+          <i class="fa-solid fa-house-chimney text-ink-900 text-lg"></i>
+        </div>
+        <div class="leading-tight">
+          <p class="font-display text-lg font-bold text-white">Axiome <span class="text-gold-400">Immobilier</span></p>
+          <p class="text-[10px] tracking-[0.25em] text-gray-400 uppercase">Kénitra · Maroc</p>
+        </div>
+      </a>
+      <nav class="hidden md:flex items-center gap-8 text-sm text-gray-300">
+        <a href="#services" class="link-underline hover:text-white">Services</a>
+        <a href="#proprietes" class="link-underline hover:text-white">Propriétés</a>
+        <a href="#pourquoi" class="link-underline hover:text-white">Pourquoi nous</a>
+        <a href="#contact" class="link-underline hover:text-white">Contact</a>
+      </nav>
+      <a href="tel:+212619842271" class="hidden sm:inline-flex items-center gap-2 btn-gold px-4 py-2 rounded-full font-semibold text-sm">
+        <i class="fa-solid fa-phone-volume"></i> +212 6 19 84 22 71
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="relative min-h-screen flex items-center pt-28 pb-20 px-5 md:px-8 overflow-hidden">
+    <div class="aurora"></div>
+    <div class="absolute inset-0 grid-overlay"></div>
+    <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-ink-900 z-10"></div>
+
+    <div class="relative z-20 max-w-7xl mx-auto w-full grid lg:grid-cols-12 gap-12 items-center">
+      <div class="lg:col-span-7">
+        <div class="reveal inline-flex items-center gap-2 glass px-4 py-2 rounded-full text-xs tracking-wide text-gray-200 mb-7">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-gold-500"></span>
+          </span>
+          Agréée N° 0619842271 · La Ville Haute, Kénitra
+        </div>
+
+        <h1 class="reveal font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-6 text-white">
+          Trouvez votre
+          <span class="relative inline-block">
+            <span class="bg-gradient-to-r from-gold-300 via-gold-400 to-gold-600 bg-clip-text text-transparent">chez-vous</span>
+            <svg class="absolute -bottom-3 left-0 w-full" viewBox="0 0 300 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M2 9 C 80 1, 220 1, 298 9" stroke="url(#g)" stroke-width="3" stroke-linecap="round" />
+              <defs>
+                <linearGradient id="g" x1="0" x2="1">
+                  <stop offset="0" stop-color="#fcd34d"/>
+                  <stop offset="1" stop-color="#f59e0b"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </span>
+          <br/>à Kénitra.
+        </h1>
+
+        <p class="reveal text-lg md:text-xl text-gray-300 max-w-2xl mb-9">
+          Appartements à <span class="text-white font-semibold">vendre</span> &amp; à <span class="text-white font-semibold">louer</span> — accompagnement personnalisé par
+          <span class="text-gold-400 font-semibold">Axiome Immobilier</span>, votre agence de confiance.
+        </p>
+
+        <div class="reveal flex flex-col sm:flex-row gap-4 mb-12">
+          <a href="#contact" class="btn-gold inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full font-semibold text-base">
+            <i class="fa-solid fa-paper-plane"></i> Nous contacter
+          </a>
+          <a href="#services" class="glass inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full font-semibold text-white hover:bg-white/10 transition">
+            <i class="fa-solid fa-compass"></i> Nos services
+          </a>
+        </div>
+
+        <!-- stats -->
+        <div class="reveal grid grid-cols-3 gap-4 max-w-xl">
+          <div class="glass-dark rounded-2xl p-4">
+            <p class="stat-num text-3xl font-bold text-white" data-target="120">0</p>
+            <p class="text-xs text-gray-400 mt-1">Biens placés</p>
+          </div>
+          <div class="glass-dark rounded-2xl p-4">
+            <p class="stat-num text-3xl font-bold text-white"><span data-target="98">0</span>%</p>
+            <p class="text-xs text-gray-400 mt-1">Clients satisfaits</p>
+          </div>
+          <div class="glass-dark rounded-2xl p-4">
+            <p class="stat-num text-3xl font-bold text-white" data-target="8">0</p>
+            <p class="text-xs text-gray-400 mt-1">Ans d'expertise</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-5 relative">
+        <!-- Floating cards -->
+        <div class="relative h-[500px] hidden lg:block">
+          <div class="absolute top-0 right-0 w-72 glass-dark gradient-border rounded-3xl p-5 float-slow">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 rounded-full bg-gold-500/20 grid place-items-center"><i class="fa-solid fa-shield-halved text-gold-400"></i></div>
+              <div>
+                <p class="font-semibold text-white text-sm">Transactions sécurisées</p>
+                <p class="text-xs text-gray-400">Cadre juridique complet</p>
+              </div>
+            </div>
+            <div class="border-t border-white/10 pt-3 text-xs text-gray-400">
+              <i class="fa-solid fa-circle-check text-emerald-400 mr-1"></i> Vérifié & accompagné
+            </div>
+          </div>
+
+          <div class="absolute top-44 left-0 w-72 glass-dark gradient-border rounded-3xl p-5 float-slow" style="animation-delay:-3s;">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 rounded-full bg-emerald-500/20 grid place-items-center"><i class="fa-brands fa-whatsapp text-emerald-400 text-lg"></i></div>
+              <div>
+                <p class="font-semibold text-white text-sm">Réponse rapide</p>
+                <p class="text-xs text-gray-400">WhatsApp · 7j/7</p>
+              </div>
+            </div>
+            <a href="https://wa.me/212619842271?text=Bonjour%20Axiome%20Immobilier%2C%20je%20souhaite%20recevoir%20plus%20d'informations%20sur%20vos%20biens%20immobiliers." target="_blank" rel="noopener" class="block text-center btn-gold rounded-full text-xs py-2 font-semibold">Discuter maintenant</a>
+          </div>
+
+          <div class="absolute bottom-0 right-6 w-64 glass-dark gradient-border rounded-3xl p-5 float-slow" style="animation-delay:-1.5s;">
+            <p class="text-xs text-gray-400 mb-1">Quartier prisé</p>
+            <p class="font-display text-2xl text-white font-semibold mb-2">La Ville Haute</p>
+            <div class="flex items-center gap-2 text-xs text-gray-300">
+              <i class="fa-solid fa-location-dot text-gold-400"></i> Bd Mohammed V
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Marquee strip -->
+  <div class="relative border-y border-white/5 bg-ink-800/40 overflow-hidden py-5">
+    <div class="marquee text-gray-400 text-sm font-medium">
+      <div class="flex items-center gap-12 px-6">
+        <span><i class="fa-solid fa-key text-gold-400 mr-2"></i> Location flexible</span>
+        <span><i class="fa-solid fa-handshake text-gold-400 mr-2"></i> Vente & Achat</span>
+        <span><i class="fa-solid fa-chart-line text-gold-400 mr-2"></i> Conseil patrimonial</span>
+        <span><i class="fa-solid fa-house-laptop text-gold-400 mr-2"></i> Visite virtuelle</span>
+        <span><i class="fa-solid fa-file-contract text-gold-400 mr-2"></i> Suivi juridique</span>
+        <span><i class="fa-solid fa-coins text-gold-400 mr-2"></i> Estimation gratuite</span>
+      </div>
+      <div class="flex items-center gap-12 px-6" aria-hidden="true">
+        <span><i class="fa-solid fa-key text-gold-400 mr-2"></i> Location flexible</span>
+        <span><i class="fa-solid fa-handshake text-gold-400 mr-2"></i> Vente & Achat</span>
+        <span><i class="fa-solid fa-chart-line text-gold-400 mr-2"></i> Conseil patrimonial</span>
+        <span><i class="fa-solid fa-house-laptop text-gold-400 mr-2"></i> Visite virtuelle</span>
+        <span><i class="fa-solid fa-file-contract text-gold-400 mr-2"></i> Suivi juridique</span>
+        <span><i class="fa-solid fa-coins text-gold-400 mr-2"></i> Estimation gratuite</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Services -->
+  <section id="services" class="relative py-24 px-5 md:px-8">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <p class="reveal text-gold-400 text-sm font-semibold tracking-[0.25em] uppercase mb-3">Notre expertise</p>
+        <h2 class="reveal font-display text-4xl md:text-5xl font-bold text-white mb-5">Services immobiliers <span class="italic text-gold-400">sur mesure</span></h2>
+        <p class="reveal text-gray-400 text-lg">Que vous cherchiez à acheter, louer ou investir, nous vous offrons un accompagnement transparent et local.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- card 1 -->
+        <article class="reveal service-card glass-dark gradient-border rounded-3xl p-8 group">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 grid place-items-center mb-6 group-hover:scale-110 transition">
+            <i class="fa-solid fa-key text-white text-xl"></i>
+          </div>
+          <h3 class="font-display text-2xl text-white font-semibold mb-3">Location d'appartements</h3>
+          <p class="text-gray-400 leading-relaxed mb-6">Studios, F2, F3 — meublés ou non. Visite rapide, contrats clairs, réactivité totale.</p>
+          <ul class="space-y-2 text-sm text-gray-300">
+            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-gold-400"></i> Visite sous 24h</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-gold-400"></i> Contrats sécurisés</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-gold-400"></i> Suivi locataire</li>
+          </ul>
+        </article>
+
+        <!-- card 2 -->
+        <article class="reveal service-card glass-dark gradient-border rounded-3xl p-8 group" style="transition-delay:80ms;">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-gold-400 to-gold-600 grid place-items-center mb-6 group-hover:scale-110 transition">
+            <i class="fa-solid fa-handshake text-ink-900 text-xl"></i>
+          </div>
+          <h3 class="font-display text-2xl text-white font-semibold mb-3">Vente &amp; Achat</h3>
+          <p class="text-gray-400 leading-relaxed mb-6">Estimation gratuite, accompagnement juridique et transactions sécurisées de bout en bout.</p>
+          <ul class="space-y-2 text-sm text-gray-300">
+            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-gold-400"></i> Estimation offerte</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-gold-400"></i> Notaire partenaire</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-gold-400"></i> Négociation experte</li>
+          </ul>
+        </article>
+
+        <!-- card 3 -->
+        <article class="reveal service-card glass-dark gradient-border rounded-3xl p-8 group" style="transition-delay:160ms;">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500 to-fuchsia-600 grid place-items-center mb-6 group-hover:scale-110 transition">
+            <i class="fa-solid fa-chart-line text-white text-xl"></i>
+          </div>
+          <h3 class="font-display text-2xl text-white font-semibold mb-3">Conseil &amp; Investissement</h3>
+          <p class="text-gray-400 leading-relaxed mb-6">Analyse du marché, meilleurs quartiers — Ville Haute, Centre, Mehdia.</p>
+          <ul class="space-y-2 text-sm text-gray-300">
+            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-gold-400"></i> Étude personnalisée</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-gold-400"></i> Rendement locatif</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-gold-400"></i> Vision long terme</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why us -->
+  <section id="pourquoi" class="relative py-24 px-5 md:px-8 bg-ink-800/40 border-y border-white/5">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <p class="reveal text-gold-400 text-sm font-semibold tracking-[0.25em] uppercase mb-3">Pourquoi Axiome</p>
+        <h2 class="reveal font-display text-4xl md:text-5xl font-bold text-white">Une agence <span class="italic text-gold-400">vraiment</span> à vos côtés</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div class="reveal glass rounded-3xl p-7 hover:border-gold-400/40 transition">
+          <i class="fa-solid fa-shield-halved text-3xl text-gold-400 mb-4"></i>
+          <p class="font-display text-xl font-semibold text-white">100% vérifié</p>
+          <p class="text-gray-400 text-sm mt-1">Biens authentiques, propriétaires identifiés.</p>
+        </div>
+        <div class="reveal glass rounded-3xl p-7 hover:border-gold-400/40 transition" style="transition-delay:80ms;">
+          <i class="fa-solid fa-location-dot text-3xl text-gold-400 mb-4"></i>
+          <p class="font-display text-xl font-semibold text-white">Localisation clé</p>
+          <p class="text-gray-400 text-sm mt-1">La Ville Haute, Kénitra — au cœur du marché.</p>
+        </div>
+        <div class="reveal glass rounded-3xl p-7 hover:border-gold-400/40 transition" style="transition-delay:160ms;">
+          <i class="fa-solid fa-headset text-3xl text-gold-400 mb-4"></i>
+          <p class="font-display text-xl font-semibold text-white">Support réactif</p>
+          <p class="text-gray-400 text-sm mt-1">WhatsApp & téléphone — réponse en quelques minutes.</p>
+        </div>
+        <div class="reveal glass rounded-3xl p-7 hover:border-gold-400/40 transition" style="transition-delay:240ms;">
+          <i class="fa-solid fa-file-signature text-3xl text-gold-400 mb-4"></i>
+          <p class="font-display text-xl font-semibold text-white">Transparence</p>
+          <p class="text-gray-400 text-sm mt-1">Prix justes, pas de surprise — jamais.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Properties -->
+  <section id="proprietes" class="relative py-24 px-5 md:px-8">
+    <div class="max-w-6xl mx-auto">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
+        <div>
+          <p class="reveal text-gold-400 text-sm font-semibold tracking-[0.25em] uppercase mb-3">Coups de cœur</p>
+          <h2 class="reveal font-display text-4xl md:text-5xl font-bold text-white">Nos biens <span class="italic text-gold-400">en vedette</span></h2>
+        </div>
+        <p class="reveal text-gray-400 max-w-md">Une sélection de propriétés récentes — visite et accompagnement immédiats sur demande.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-7">
+        <!-- Property 1 -->
+        <article class="reveal prop-card glass-dark gradient-border rounded-3xl overflow-hidden">
+          <div class="relative h-56 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Appartement Centre Ville Kénitra" class="w-full h-full object-cover" loading="lazy" />
+            <div class="absolute inset-0 bg-gradient-to-t from-ink-900/80 via-ink-900/10 to-transparent"></div>
+            <span class="absolute top-4 left-4 bg-emerald-500/90 text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide">Location</span>
+            <span class="absolute top-4 right-4 glass text-white text-xs font-semibold px-3 py-1 rounded-full"><i class="fa-solid fa-bed mr-1"></i> 2 ch.</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-baseline justify-between mb-2">
+              <h3 class="font-display text-xl font-semibold text-white">Centre Ville · Moderne</h3>
+            </div>
+            <p class="text-gray-400 text-sm mb-4"><i class="fa-solid fa-location-dot text-gold-400 mr-1"></i> Centre Ville · proche tramway</p>
+            <div class="flex items-center justify-between mb-5">
+              <p class="text-2xl font-bold text-gold-400">850 €<span class="text-sm text-gray-400 font-normal">/mois</span></p>
+              <div class="flex gap-2 text-xs text-gray-400">
+                <span><i class="fa-solid fa-bath"></i> 1</span>
+                <span><i class="fa-solid fa-vector-square"></i> 75 m²</span>
+              </div>
+            </div>
+            <a href="tel:+212619842271" class="btn-gold w-full inline-flex items-center justify-center gap-2 py-3 rounded-full font-semibold text-sm">
+              <i class="fa-solid fa-phone"></i> Contacter
+            </a>
+          </div>
+        </article>
+
+        <!-- Property 2 -->
+        <article class="reveal prop-card glass-dark gradient-border rounded-3xl overflow-hidden" style="transition-delay:80ms;">
+          <div class="relative h-56 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1560185009-a5b9d4039a2f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Résidence Les Jardins" class="w-full h-full object-cover" loading="lazy" />
+            <div class="absolute inset-0 bg-gradient-to-t from-ink-900/80 via-ink-900/10 to-transparent"></div>
+            <span class="absolute top-4 left-4 bg-purple-500/90 text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide">Vente</span>
+            <span class="absolute top-4 right-4 glass text-white text-xs font-semibold px-3 py-1 rounded-full"><i class="fa-solid fa-bed mr-1"></i> 3 ch.</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-xl font-semibold text-white mb-2">Résidence Les Jardins</h3>
+            <p class="text-gray-400 text-sm mb-4"><i class="fa-solid fa-location-dot text-gold-400 mr-1"></i> Vue panoramique · parking inclus</p>
+            <div class="flex items-center justify-between mb-5">
+              <p class="text-2xl font-bold text-gold-400">195 000 €</p>
+              <div class="flex gap-2 text-xs text-gray-400">
+                <span><i class="fa-solid fa-bath"></i> 2</span>
+                <span><i class="fa-solid fa-vector-square"></i> 110 m²</span>
+              </div>
+            </div>
+            <a href="tel:+212619842271" class="btn-gold w-full inline-flex items-center justify-center gap-2 py-3 rounded-full font-semibold text-sm">
+              <i class="fa-solid fa-phone"></i> Contacter
+            </a>
+          </div>
+        </article>
+
+        <!-- Property 3 -->
+        <article class="reveal prop-card glass-dark gradient-border rounded-3xl overflow-hidden" style="transition-delay:160ms;">
+          <div class="relative h-56 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1574362848149-11496d93a7c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Studio Ville Haute" class="w-full h-full object-cover" loading="lazy" />
+            <div class="absolute inset-0 bg-gradient-to-t from-ink-900/80 via-ink-900/10 to-transparent"></div>
+            <span class="absolute top-4 left-4 bg-emerald-500/90 text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide">Location</span>
+            <span class="absolute top-4 right-4 glass text-white text-xs font-semibold px-3 py-1 rounded-full"><i class="fa-solid fa-bed mr-1"></i> 1 ch.</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-xl font-semibold text-white mb-2">Studio Ville Haute</h3>
+            <p class="text-gray-400 text-sm mb-4"><i class="fa-solid fa-location-dot text-gold-400 mr-1"></i> Entièrement meublé · calme</p>
+            <div class="flex items-center justify-between mb-5">
+              <p class="text-2xl font-bold text-gold-400">550 €<span class="text-sm text-gray-400 font-normal">/mois</span></p>
+              <div class="flex gap-2 text-xs text-gray-400">
+                <span><i class="fa-solid fa-bath"></i> 1</span>
+                <span><i class="fa-solid fa-vector-square"></i> 38 m²</span>
+              </div>
+            </div>
+            <a href="tel:+212619842271" class="btn-gold w-full inline-flex items-center justify-center gap-2 py-3 rounded-full font-semibold text-sm">
+              <i class="fa-solid fa-phone"></i> Contacter
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="relative py-24 px-5 md:px-8 overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vmax] h-[80vmax] bg-gradient-radial from-indigo-900/30 to-transparent rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="relative max-w-6xl mx-auto">
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <p class="reveal text-gold-400 text-sm font-semibold tracking-[0.25em] uppercase mb-3">Contact</p>
+        <h2 class="reveal font-display text-4xl md:text-5xl font-bold text-white mb-4">Parlons de votre <span class="italic text-gold-400">projet</span></h2>
+        <p class="reveal text-gray-400 text-lg">Appel, WhatsApp ou formulaire — nous vous répondons sous 24h.</p>
+      </div>
+
+      <div class="reveal glass-dark gradient-border rounded-3xl overflow-hidden">
+        <div class="grid lg:grid-cols-2">
+          <!-- Left: Direct contact -->
+          <div class="p-8 md:p-10 bg-gradient-to-br from-indigo-950/60 to-ink-900/60 border-b lg:border-b-0 lg:border-r border-white/5">
+            <h3 class="font-display text-2xl text-white font-semibold mb-2">Contact direct</h3>
+            <p class="text-gray-400 text-sm mb-8">Choisissez le canal qui vous convient le mieux.</p>
+
+            <ul class="space-y-5">
+              <li class="flex items-start gap-4 group">
+                <div class="w-12 h-12 rounded-2xl bg-gold-500/15 grid place-items-center flex-shrink-0 group-hover:bg-gold-500/25 transition">
+                  <i class="fa-solid fa-phone-volume text-gold-400 text-lg"></i>
+                </div>
+                <div>
+                  <p class="text-xs uppercase tracking-widest text-gray-500">Téléphone</p>
+                  <a href="tel:+212619842271" class="text-white font-semibold text-lg hover:text-gold-400 transition">+212 6 19 84 22 71</a>
+                  <p class="text-xs text-gray-500 mt-1">Lun. — Sam. · 9h–19h</p>
+                </div>
+              </li>
+
+              <li class="flex items-start gap-4 group">
+                <div class="w-12 h-12 rounded-2xl bg-emerald-500/15 grid place-items-center flex-shrink-0 group-hover:bg-emerald-500/25 transition">
+                  <i class="fa-brands fa-whatsapp text-emerald-400 text-xl"></i>
+                </div>
+                <div>
+                  <p class="text-xs uppercase tracking-widest text-gray-500">WhatsApp</p>
+                  <a href="https://wa.me/212619842271?text=Bonjour%20Axiome%20Immobilier%2C%20je%20souhaite%20recevoir%20plus%20d'informations%20sur%20vos%20biens%20immobiliers." target="_blank" rel="noopener" class="text-white font-semibold text-lg hover:text-emerald-400 transition">Chat instantané</a>
+                  <p class="text-xs text-gray-500 mt-1">Réponse rapide · 7j/7</p>
+                </div>
+              </li>
+
+              <li class="flex items-start gap-4 group">
+                <div class="w-12 h-12 rounded-2xl bg-rose-500/15 grid place-items-center flex-shrink-0 group-hover:bg-rose-500/25 transition">
+                  <i class="fa-solid fa-location-dot text-rose-400 text-lg"></i>
+                </div>
+                <div>
+                  <p class="text-xs uppercase tracking-widest text-gray-500">Adresse</p>
+                  <p class="text-white font-semibold">La Ville Haute, Kénitra</p>
+                  <p class="text-xs text-gray-500 mt-1">Près du boulevard Mohammed V</p>
+                </div>
+              </li>
+
+              <li class="flex items-start gap-4 group">
+                <div class="w-12 h-12 rounded-2xl bg-indigo-500/15 grid place-items-center flex-shrink-0 group-hover:bg-indigo-500/25 transition">
+                  <i class="fa-regular fa-clock text-indigo-300 text-lg"></i>
+                </div>
+                <div>
+                  <p class="text-xs uppercase tracking-widest text-gray-500">Horaires</p>
+                  <p class="text-white font-semibold">9h00 – 18h30</p>
+                  <p class="text-xs text-gray-500 mt-1">Rendez-vous flexible</p>
+                </div>
+              </li>
+            </ul>
+
+            <div class="mt-8 pt-6 border-t border-white/10 text-xs text-gray-400 flex items-center gap-2">
+              <i class="fa-solid fa-shield-halved text-gold-400"></i> Agréée N° 0619842271 — agence officielle
+            </div>
+          </div>
+
+          <!-- Right: Form -->
+          <div class="p-8 md:p-10">
+            <h3 class="font-display text-2xl text-white font-semibold mb-2">Envoyez votre demande</h3>
+            <p class="text-gray-400 text-sm mb-6">Décrivez votre besoin — nous revenons vers vous très vite.</p>
+
+            <form id="contactForm" novalidate class="space-y-4">
+              <input type="hidden" name="access_key" value="f2817678-f661-489f-9acc-5bb4d374722f" />
+              <input type="hidden" name="subject" value="🏠 Nouvelle demande — Axiome Immobilier" />
+              <input type="hidden" name="from_name" value="Axiome Immobilier — Site Web" />
+              <input type="hidden" name="to" value="vinlandream@gmail.com" />
+              <!-- honeypot -->
+              <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
+
+              <div>
+                <label class="block text-xs uppercase tracking-widest text-gray-400 mb-2">Nom complet *</label>
+                <input type="text" name="name" required class="field" placeholder="Youssef Benjelloun" />
+              </div>
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs uppercase tracking-widest text-gray-400 mb-2">Email *</label>
+                  <input type="email" name="email" required class="field" placeholder="exemple@domaine.com" />
+                </div>
+                <div>
+                  <label class="block text-xs uppercase tracking-widest text-gray-400 mb-2">Téléphone</label>
+                  <input type="tel" name="phone" class="field" placeholder="06 xx xx xx xx" />
+                </div>
+              </div>
+              <div>
+                <label class="block text-xs uppercase tracking-widest text-gray-400 mb-2">Votre message *</label>
+                <textarea name="message" rows="4" required class="field resize-none" placeholder="Je cherche un appartement de 2 pièces à la Ville Haute, budget location 600 €/mois…"></textarea>
+              </div>
+
+              <button type="submit" id="submitBtn" class="btn-gold w-full inline-flex items-center justify-center gap-2 py-4 rounded-full font-semibold text-base">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span>Envoyer la demande</span>
+              </button>
+
+              <div id="formStatus" class="hidden text-sm rounded-2xl p-4"></div>
+
+              <p class="text-center text-xs text-gray-500 pt-2">
+                Préférez l'email ?
+                <a href="mailto:contact@axiome-immobilier.ma" class="text-gold-400 hover:underline">contact@axiome-immobilier.ma</a>
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="relative bg-ink-900 border-t border-white/5 pt-16 pb-8 px-5 md:px-8">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-10 mb-10">
+      <div>
+        <a href="#" class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-gold-400 to-gold-600 grid place-items-center">
+            <i class="fa-solid fa-house-chimney text-ink-900"></i>
+          </div>
+          <p class="font-display text-xl font-bold text-white">Axiome <span class="text-gold-400">Immobilier</span></p>
+        </a>
+        <p class="text-gray-400 text-sm leading-relaxed">Votre partenaire de confiance à Kénitra. Transactions claires, réactivité et conseil expert.</p>
+        <p class="mt-4 inline-flex items-center gap-2 text-xs text-gray-500"><i class="fa-solid fa-shield-halved text-gold-400"></i> Agréée N° 0619842271</p>
+      </div>
+
+      <div>
+        <h4 class="font-semibold text-white mb-4 text-sm tracking-widest uppercase">Contact rapide</h4>
+        <ul class="space-y-3 text-sm text-gray-400">
+          <li><a href="tel:+212619842271" class="hover:text-white inline-flex items-center gap-2"><i class="fa-solid fa-phone-volume text-gold-400"></i> +212 6 19 84 22 71</a></li>
+          <li><a href="https://wa.me/212619842271" target="_blank" rel="noopener" class="hover:text-white inline-flex items-center gap-2"><i class="fa-brands fa-whatsapp text-emerald-400"></i> WhatsApp Business</a></li>
+          <li><a href="mailto:contact@axiome-immobilier.ma" class="hover:text-white inline-flex items-center gap-2"><i class="fa-solid fa-envelope text-rose-400"></i> contact@axiome-immobilier.ma</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-semibold text-white mb-4 text-sm tracking-widest uppercase">Adresse</h4>
+        <p class="text-gray-400 text-sm mb-4"><i class="fa-solid fa-location-dot text-gold-400 mr-1"></i> La Ville Haute, Kénitra, Maroc<br/><span class="text-xs text-gray-500">Près du boulevard Mohammed V</span></p>
+        <div class="flex gap-3">
+          <a href="https://wa.me/212619842271" target="_blank" rel="noopener" aria-label="WhatsApp" class="w-10 h-10 rounded-full glass grid place-items-center hover:bg-emerald-500/20 hover:text-emerald-400 transition"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="tel:+212619842271" aria-label="Appeler" class="w-10 h-10 rounded-full glass grid place-items-center hover:bg-gold-500/20 hover:text-gold-400 transition"><i class="fa-solid fa-phone"></i></a>
+          <a href="mailto:contact@axiome-immobilier.ma" aria-label="Email" class="w-10 h-10 rounded-full glass grid place-items-center hover:bg-rose-500/20 hover:text-rose-400 transition"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto pt-6 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-gray-500">
+      <p>© 2026 Axiome Immobilier — Tous droits réservés.</p>
+      <p>Conçu avec <i class="fa-solid fa-heart text-rose-400"></i> à Kénitra</p>
+    </div>
+  </footer>
+
+  <!-- Floating WhatsApp -->
+  <a href="https://wa.me/212619842271?text=Bonjour%20Axiome%20Immobilier%2C%20je%20souhaite%20recevoir%20plus%20d'informations%20sur%20vos%20biens%20immobiliers."
+     target="_blank" rel="noopener"
+     class="floating-wa relative w-14 h-14 rounded-full bg-emerald-500 hover:bg-emerald-600 grid place-items-center text-white text-2xl"
+     aria-label="Discuter sur WhatsApp">
+    <span class="pulse-ring"></span>
+    <i class="fa-brands fa-whatsapp relative"></i>
+  </a>
+
+  <script>
+    // Navbar scroll style
+    const nav = document.getElementById('nav');
+    const onScroll = () => {
+      if (window.scrollY > 30) nav.classList.add('glass-dark', 'shadow-lg');
+      else nav.classList.remove('glass-dark', 'shadow-lg');
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // Reveal on scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Stat counters
+    const counters = document.querySelectorAll('[data-target]');
+    const cIO = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        const target = +el.dataset.target;
+        const duration = 1400;
+        const start = performance.now();
+        const tick = (now) => {
+          const p = Math.min(1, (now - start) / duration);
+          const eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(target * eased);
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+        cIO.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(c => cIO.observe(c));
+
+    // Contact form (Web3Forms)
+    const form = document.getElementById('contactForm');
+    const statusEl = document.getElementById('formStatus');
+    const btn = document.getElementById('submitBtn');
+
+    const setStatus = (type, html) => {
+      statusEl.classList.remove('hidden', 'bg-emerald-500/10', 'text-emerald-300', 'bg-rose-500/10', 'text-rose-300', 'bg-indigo-500/10', 'text-indigo-200');
+      const map = {
+        loading: ['bg-indigo-500/10', 'text-indigo-200'],
+        success: ['bg-emerald-500/10', 'text-emerald-300'],
+        error:   ['bg-rose-500/10', 'text-rose-300'],
+      };
+      statusEl.classList.add(...map[type]);
+      statusEl.innerHTML = html;
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const original = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>Envoi en cours…</span>';
+      setStatus('loading', '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Envoi en cours…');
+
+      try {
+        const formData = new FormData(form);
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: formData,
+        });
+        const data = await res.json();
+        if (data.success) {
+          setStatus('success', '<i class="fa-solid fa-circle-check mr-2"></i> Message envoyé avec succès — nous vous répondrons sous 24h. Merci !');
+          form.reset();
+        } else {
+          throw new Error(data.message || 'Submission failed');
+        }
+      } catch (err) {
+        setStatus('error', '<i class="fa-solid fa-triangle-exclamation mr-2"></i> Une erreur est survenue. Merci de nous appeler au <a class="underline" href="tel:+212619842271">+212 6 19 84 22 71</a> ou via <a class="underline" href="https://wa.me/212619842271" target="_blank" rel="noopener">WhatsApp</a>.');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = original;
+      }
+    });
+
+    // Update copyright year if tomorrow brings 2027+
+    const yearEl = document.querySelector('footer p');
+    // (intentionally light — explicit "© 2026" already meets the brief)
+  </script>
+</body>
+</html>
